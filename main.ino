@@ -42,12 +42,12 @@ uint16_t get_ADC_sample(void) {
 
 void setup() {
 
-  DDRA |= (1 << PA2);   // Signal occupation
+  DDRA |= (1 << PA1);   // Signal occupation
   DDRA &= ~(1 << PA4);  // Switch 0
   DDRA &= ~(1 << PA5);  // Switch 1
   DDRA &= ~(1 << PA6);  // Switch 2
   DDRA &= ~(1 << PA7);  // Switch 3
-  DDRB |= (1 << PB1);   // Signal cc
+  DDRA |= (1 << PA2);   // Signal cc
   DDRB |= (1 << PB2);   // Relais
 
   etatSwitchOcc = (PINA & 0x30) >> 4;
@@ -74,8 +74,8 @@ void setup() {
 
 
   PORTB |= (1 << PB2);   // Relais
-  PORTA &= ~(1 << PA2);  // Signal occupation
-  PORTB &= ~(1 << PB1);  // Signal cc
+  PORTA &= ~(1 << PA1);  // Signal occupation
+  PORTA &= ~(1 << PA2);  // Signal cc
 }
 
 
@@ -88,17 +88,17 @@ void loop() {
 
 
 if (sample < seuilOcc) {
-    PORTA &= ~(1 << PA2);  // Signal occupation
+    PORTA &= ~(1 << PA1);  // Signal occupation
 } else {
-    PORTA |= (1 << PA2);   // Signal occupation
+    PORTA |= (1 << PA1);   // Signal occupation
 }
 
   if (sample >= seuilCc) {
     PORTB &= ~(1 << PB2);  // Relais
-    PORTB |= (1 << PB1);   // Signal cc
+    PORTB |= (1 << PA2);   // Signal cc
     delay(tempoCC);
     PORTB |= (1 << PB2);   // Relais
-    PORTB &= ~(1 << PB1);  // Signal cc
+    PORTB &= ~(1 << PA2);  // Signal cc
   }
   delay(1);
 }
